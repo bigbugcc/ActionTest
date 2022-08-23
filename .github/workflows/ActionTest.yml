@@ -26,7 +26,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - uses: shaowenchen/debugger-action@v1
+    - uses: shaowenchen/debugger-action@v2
       name: debugger
       timeout-minutes: 360
       continue-on-error: true
