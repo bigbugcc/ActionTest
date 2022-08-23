@@ -1,4 +1,4 @@
-name: Rockchip_armv8
+name: ActionTest
 
 on:
   repository_dispatch:
@@ -26,15 +26,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - uses: shaowenchen/debugger-action@v2
-      name: debugger
-      timeout-minutes: 360
-      continue-on-error: true
-      with:
-        frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
-        frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
-        frp_token: ${{ secrets.FRP_TOKEN }}
-        ssh_port: ${{ secrets.SSH_PORT }}
+    
 
     - name: Initialization environment
       env:
@@ -90,6 +82,16 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+    - uses: shaowenchen/debugger-action@v2
+      name: debugger
+      timeout-minutes: 360
+      continue-on-error: true
+      with:
+        frp_server_addr: ${{ secrets.FRP_SERVER_ADDR }}
+        frp_server_port: ${{ secrets.FRP_SERVER_PORT }}
+        frp_token: ${{ secrets.FRP_TOKEN }}
+        ssh_port: ${{ secrets.SSH_PORT }}
 
     - name: Download package
       id: package
