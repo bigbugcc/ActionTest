@@ -10,7 +10,7 @@ jobs:
 
     env:
       Solution_Path: RDP-Helper.sln
-      PublishFile: 'bin\publish\RDP-Helper.exe'
+      PublishFile: 'bin\Release\net6.0-windows\publish\RDP-Helper.exe'
       Wpf_Project_Path: RDP-Helper.csproj
       PublishProfile: 'Properties\PublishProfiles\single.pubxml'
 
@@ -43,7 +43,7 @@ jobs:
         
     - name: FileScan
       shell: pwsh
-      run: ls .\bin
+      run: ls bin\Release\net6.0-windows\publish\
  
     - name: Create Release
       uses: softprops/action-gh-release@v1
