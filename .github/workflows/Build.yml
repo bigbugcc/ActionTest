@@ -10,10 +10,8 @@ jobs:
 
     env:
       Solution_Path: RDP-Helper.sln
-      PublishFile: 'bin\Release\net6.0-windows\publish\RDP-Helper.exe'
+      PublishFile: 'bin\publish\RDP-Helper.exe'
       Wpf_Project_Path: RDP-Helper.csproj
-      PublishProfile: 'Properties\PublishProfiles\single.pubxml'
-
 
     steps:
     - name: Checkout
@@ -39,21 +37,22 @@ jobs:
         
     - name: Build
       run: msbuild $env:Solution_Path /t:Restore /t:publish /p:Platform="Any CPU"
-        /p:Configuration=Release /p:PublishProfile=$env:PublishProfile
+        /p:Configuration=Release /p:PublishProfile="Properties\PublishProfiles\single.pubxml"
         
     - name: FileScan
       shell: pwsh
-      run: ls bin\Release\net6.0-windows\publish\
+      run: ls bin\
  
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: 1.0
-        name: RDP-Helper - v1.0
+        tag_name: $(Get-Date -Format "yyyyMMdd-HHmm")
+        name: RDP-Helper
         token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: false
         body: | 
           Release Note:
           - fix: Several small issues
+          - date:  $(Get-Date -Format "yyyy-MM-dd-HH:mm")
         files: | 
           ${{ env.PublishFile }}
