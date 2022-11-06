@@ -10,7 +10,7 @@ jobs:
 
     env:
       Solution_Path: RDP-Helper.sln
-      PublishFile: 'bin/publish'
+      PublishFile: 'bin/publish/RDP-Helper.exe'
       Wpf_Project_Path: RDP-Helper.csproj
       PublishProfile: 'Properties\PublishProfiles\single.pubxml'
 
