@@ -36,17 +36,21 @@ jobs:
         
         
     - name: Build
-      run: msbuild $env:Solution_Path /t:Restore /t:publish /p:Platform="Any CPU"
-        /p:Configuration=Release /p:PublishProfile="Properties\PublishProfiles\single.pubxml"
+      run: msbuild $env:Solution_Path /t:Restore /t:publish
+        /p:PublishProfile="Properties\PublishProfiles\single.pubxml"
         
     - name: FileScan
       shell: pwsh
       run: ls bin\
+      
+    - name: Tags
+      shell: pwsh
+      run: echo "release_tag=$(Get-Date -Format "yyyyMMdd-HHmm") >> $GITHUB_OUTPUT
  
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: $(Get-Date -Format "yyyyMMdd-HHmm")
+        tag_name: ${{ steps.tag.outputs.release_tag }}
         name: RDP-Helper
         token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: false
