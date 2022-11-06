@@ -43,7 +43,7 @@ jobs:
         
     - name: FileScan
       shell: pwsh
-      run: ls bin/publish
+      run: ls 
  
     - name: Create Release
       uses: softprops/action-gh-release@v1
