@@ -60,6 +60,6 @@ jobs:
         body: | 
           Release Note:
           - fix: Several small issues
-          - date:  $(Get-Date -Format "yyyy-MM-dd-HH:mm")
+          - date:  ${{ env.tag }}
         files: | 
           ${{ env.PublishFile }}
