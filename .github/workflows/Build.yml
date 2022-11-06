@@ -11,6 +11,7 @@ jobs:
     env:
       Solution_Path: RDP-Helper.sln
       PublishFile: 'bin\publish\RDP-Helper.exe'
+      PublishProfile: 'Properties\PublishProfiles\single.pubxml'
       Wpf_Project_Path: RDP-Helper.csproj
 
     steps:
@@ -36,8 +37,8 @@ jobs:
         
         
     - name: Build
-      run: msbuild $env:Solution_Path /t:Restore /t:publish
-        /p:PublishProfile="Properties\PublishProfiles\single.pubxml"
+      run: msbuild $env:Solution_Path /t:Restore /t:publish /p:Configuration=Release /p:DeployOnBuild=true
+        /p:PublishProfile=$env:PublishProfile
         
     - name: FileScan
       shell: pwsh
@@ -45,12 +46,14 @@ jobs:
       
     - name: Tags
       shell: pwsh
-      run: echo "release_tag=$(Get-Date -Format "yyyyMMdd-HHmm") >> $GITHUB_OUTPUT
+      run: |
+        $tag=$(Get-Date -Format "yyyyMMdd-HHmm")
+        echo "tag=$tag" | Out-File -Append -Encoding UTF8 -FilePath $Env:GITHUB_ENV
  
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
+        tag_name: ${{ env.tag }}
         name: RDP-Helper
         token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: false
