@@ -42,6 +42,7 @@ jobs:
         /p:Configuration=Release /p:PublishProfile=$env:PublishProfile
         
     - name: FileScan
+      shell: pwsh
       run: ls bin/publish
  
     - name: Create Release
