@@ -5,10 +5,6 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        targetplatform: [Any CPU]
-
     runs-on: windows-latest
 
 
@@ -42,7 +38,7 @@ jobs:
         
         
     - name: Build
-      run: msbuild $env:Solution_Path /t:Restore /t:publish /p:Platform=$env:TargetPlatform 
+      run: msbuild $env:Solution_Path /t:Restore /t:publish /p:Platform="Any CPU"
         /p:Configuration=Release /p:PublishProfile=$env:PublishProfile
  
  
