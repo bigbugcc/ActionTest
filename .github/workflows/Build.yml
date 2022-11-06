@@ -40,13 +40,14 @@ jobs:
     - name: Build
       run: msbuild $env:Solution_Path /t:Restore /t:publish /p:Platform="Any CPU"
         /p:Configuration=Release /p:PublishProfile=$env:PublishProfile
- 
+        
+    - name: FileScan
+      run: ls bin/publish
  
     - name: Create Release
-      id: release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: $(date +"%Y.%m.%d-%H%M")
+        tag_name: 1.0
         name: RDP-Helper - v1.0
         token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: false
